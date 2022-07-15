@@ -4,7 +4,10 @@
 
 // Function to initialize uart 
 void uart_init(void);
-
+// Function to write
+int uart_write(int ch);
+// Function to read
+int uart_read(void);
 
 
 #endif

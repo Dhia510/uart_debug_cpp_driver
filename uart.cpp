@@ -15,3 +15,17 @@ void uart_init(void)
 	USART2->CR3    =  0x0000; // No flow control
 	USART2->CR1	  |=  0x2000; // Enable USART2
 }
+
+int uart_write(int ch)
+{
+	while(!(USART2->SR & 0x0080)){} // Wait until Tx is idle
+	USART2->DR = (ch & 0xFF);
+	return 1;
+}
+
+int uart_read(void)
+{
+	while(!(USART2->SR & 0x0020)){} // 
+	return USART2->DR;
+}
+
