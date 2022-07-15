@@ -1,0 +1,5 @@
+*.uvoptx
+*.uvprojx
+Listings/
+Objects/
+uart_debug.uvguix.dhia
