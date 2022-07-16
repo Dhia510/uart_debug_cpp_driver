@@ -29,3 +29,60 @@ int uart_read(void)
 	return USART2->DR;
 }
 
+/* Redefining low-level library functions to enable direct use 
+ *of high-level library functions in the C library*/
+namespace std
+{
+	struct __FILE 
+	{int handle;};
+	FILE __stdin;
+	FILE __stdout;
+	FILE __stderr;
+	
+	int fgetc(FILE *f)
+	{
+    int c;
+	  c = uart_read();
+		
+    if(c =='\r')
+		{
+			uart_write(c);
+			c = '\n';
+		}
+		
+		uart_write(c);
+		return c;	
+  }
+	
+	int fputc(int c, FILE *stream)
+	 {
+	   return uart_write(c);
+	 }
+	 
+	 int ferror(FILE *stream)
+	 {
+	  return 1;
+	 }
+	 
+	
+	 long int ftell(FILE *stream)
+	 {
+	 	  return 1;
+
+	 }
+	 
+	 int fclose(FILE *f)
+	 {
+	  return 1;
+	 } 
+	 
+	 int fseek(FILE *f, long nPos, int nMode)
+	 {
+		 return 0;
+	 }
+	 
+	 int fflush(FILE *f)
+	 {
+	  return 1;
+	 }
+}
